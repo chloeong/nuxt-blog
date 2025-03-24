@@ -9,7 +9,6 @@ export function useRouteMetadata() {
     {
       label: 'Member',
       name: 'member',
-      to: '/member',
       icon: 'people',
       children: [
         {

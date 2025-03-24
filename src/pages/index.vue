@@ -104,6 +104,30 @@ const buttons: QBtnProps[] = [
           @update:model-value="(val) => dark.set(val)"
         />
       </q-item>
+      <q-item v-for="(button, idx) in buttons" :key="idx">
+        <q-btn color="primary" v-bind="button" />
+      </q-item>
+      <q-item>
+        <q-toggle
+          :model-value="dark.isActive"
+          checked-icon="dark_mode"
+          unchecked-icon="light_mode"
+          size="3rem"
+          @update:model-value="(val) => dark.set(val)"
+        />
+      </q-item>
+      <q-item v-for="(button, idx) in buttons" :key="idx">
+        <q-btn color="primary" v-bind="button" />
+      </q-item>
+      <q-item>
+        <q-toggle
+          :model-value="dark.isActive"
+          checked-icon="dark_mode"
+          unchecked-icon="light_mode"
+          size="3rem"
+          @update:model-value="(val) => dark.set(val)"
+        />
+      </q-item>
     </q-list>
     <p class="text-h6 q-pt-md">Directive Showcase</p>
     <q-list bordered separator style="max-width: 318px">

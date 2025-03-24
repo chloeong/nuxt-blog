@@ -99,19 +99,20 @@ components
 navbar
 v sidebar - child, default open, toggle
 v header - toggle
-breadcrumb
-footer
-pagination
-table - table, filters, summary, sortable, sort, edit
+v breadcrumb
+v footer
+v go top
 filter
+table - table, filters, summary, sortable, sort, edit
+pagination
 form
 dialog
 file uploads
-go top
 dialog - confirm delete
 
 plugins
 v dayjs
 v filters
 router
+validation
 
