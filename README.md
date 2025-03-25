@@ -75,20 +75,21 @@ bun run preview
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
 nuxt-blog/
-├── assets/
-│   └── css/
-├── components/
-│   └── ui/
-├── composables/
-├── layouts/
-│   └── default.vue        // Default layout for all pages
-│   └── empty.vue          // Empty layout for error pages
-├── pages/
-│   ├── index.vue           // Main task list page
-├── plugins/
-│   ├── pinia.ts            // Pinia plugin (if needed, Nuxt module handles most)
-│   ├── quasar.ts           // Quasar plugin (if needed, Nuxt module handles most)
-├── stores/
+├── src/
+│   ├── assets/
+│   │   └── css/
+│   ├── components/
+│   │   └── ui/
+│   ├── composables/
+│   ├── layouts/
+│   │   └── default.vue        // Default layout for all pages
+│   │   └── empty.vue          // Empty layout for error pages
+│   ├── pages/
+│   │   ├── index.vue           // Main task list page
+│   ├── plugins/
+│   │   ├── pinia.ts            // Pinia plugin (if needed, Nuxt module handles most)
+│   │   ├── quasar.ts           // Quasar plugin (if needed, Nuxt module handles most)
+│   ├── stores/
 ├── app.vue                // Root component
 ├── nuxt.config.ts         // Nuxt configuration file
 ├── package.json           // Project dependencies
@@ -102,8 +103,8 @@ v header - toggle
 v breadcrumb
 v footer
 v go top
-filter
-table - table, filters, summary, sortable, sort, edit
+filter - input, select, multiple-select, date, date-range, custom
+table - table, filters, summary, sortable, sort, operation(row-edit, row-delete, all-edit), 
 pagination
 form
 dialog
