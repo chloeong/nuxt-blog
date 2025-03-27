@@ -103,7 +103,7 @@ v header - toggle
 v breadcrumb
 v footer
 v go top
-filter - input, select, multiple-select, date, date-range, custom
+filter - input, select, multiple-select, date, date-range, custom, search-button, clear-button, validation
 table - table, filters, summary, sortable, sort, operation(row-edit, row-delete, all-edit), 
 pagination
 form

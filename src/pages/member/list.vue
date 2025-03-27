@@ -1,14 +1,23 @@
 <template lang="pug">
 Filter(
+  title="Title"
+  subTitle="Sub Title"
   v-model="searchData"
   :fields="searchFields"
-  @submit="handleSearch"
+  :errorState="errorState"
+  :handleSearch="handleSearch"
+  :handleClear="handleClear"
 )
+  template(#actionButton)
+    QBtn(label="Search" color="primary" @click="handleSearch")
 Table(
   :rows="rows"
   :columns="columns"
   :summary="summary"
 )
+  template(#operate="{ row }")
+    QBtn(@click="handleEditRow(row)" color="primary" dense round flat icon="edit")
+    QBtn(@click="handleDeleteRow(row)" color="negative" dense round flat icon="delete" class="q-ml-sm")
 </template>
 
 <script setup>
@@ -20,17 +29,24 @@ const { $filters } = useNuxtApp();
 const { isDateAfterToday, isDateBefore30Days } = useDateFilter();
 
 const searchFields = ref([
-  { name: 'username', type: 'input', label: 'Username', options: { placeholder: 'Enter name' } },
-  { name: 'status', type: 'select', label: 'Status', options: { clearable: true, selectOptions: [{label: 'Enable', value: 1}, {label: 'Disable', value: 0}, {label: 'Freeze', value: 2}] } },
-  { name: 'birthday', type: 'date', label: 'Birthday', options: { disabledOptions: (date) => isDateAfterToday(date) } },
-  { name: 'registerDate', type: 'date-range', label: 'Register Date', options: { disabledOptions: (date) => isDateAfterToday(date) } },
+  { name: 'username', type: 'input', label: 'Username', icon: 'search', placeholder: 'Enter name' },
+  { name: 'status', type: 'multiple-select', label: 'Status', icon: 'search', clearable: true, selectOptions: [{label: 'Enable', value: 1}, {label: 'Disable', value: 0}, {label: 'Freeze', value: 2}] },
+  { name: 'birthday', type: 'date', label: 'Birthday', icon: 'event', dateOptions: (date) => isDateAfterToday(date) },
+  { name: 'registerDate', type: 'date-range', label: 'Register Date', icon: 'event', dateOptions: (date) => isDateAfterToday(date) },
 ]);
 
 const searchData = ref({
   username: '',
-  status: '',
+  status: [],
   birthday: '',
-  registerDate: { from: '', to: '' },
+  registerDate: { start: '', end: '' },
+});
+
+const error = ref({});
+
+const errorState = computed(() => {
+  if (Object.keys(error.value).length <= 0) return [];
+  return error.value;
 });
 
 const columns = [
@@ -43,7 +59,7 @@ const columns = [
   { name: 'discount', label: 'Discount (%)', align: 'right', field: 'discount', format: val => $filters.percent(val) },
   { name: 'birthday', label: 'Birthday', align: 'center', field: 'birthday', format: val => $filters.date(val) },
   { name: 'registerDate', label: 'Register Date', align: 'center', field: 'registerDate', format: val => $filters.dateFull(val) },
-  { name: 'actions', label: 'Actions', align: 'center' }
+  { name: 'operate', label: 'Operate', align: 'center' }
 ];
 
 const rows = [
@@ -75,8 +91,16 @@ const summary = ref({
   balance: 3000,
   discount: 0.16,
 });
-
 const handleSearch = () => {
   console.log(searchData.value);
+}
+const handleClear = () => {
+  console.log(searchData.value);
+}
+const handleEditRow = (row) => {
+  console.log(row);
+};
+const handleDeleteRow = (row) => {
+  console.log(row);
 };
 </script>

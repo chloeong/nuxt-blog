@@ -5,9 +5,10 @@
     QDrawer(v-model="isSidebarOpen" show-if-above bordered)
       Sidebar(@toggleSidebar="toggleSidebar")
 
-    QPageContainer.main-content
-      Breadcrumb
-      slot
+    QPageContainer
+      .main-content
+        Breadcrumb
+        slot
     
     Footer
 
@@ -28,3 +29,10 @@ function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value;
 }
 </script>
+
+<style scoped lang="scss">
+.main-content {
+  padding: 0 30px;
+}
+</style>
+  
