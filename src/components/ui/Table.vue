@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  QTable(
+  q-table(
     flat
     :bordered="false"
     separator="none"
@@ -12,21 +12,21 @@ div
     :pagination="pagination"
   )
     template(v-slot:body="props")
-      QTr(:props="props" :class="props.rowIndex % 2 === 0 ? 'even-row' : 'odd-row'")
-        QTd(v-for="col in props.cols" :key="col.name" :props="props")
+      q-tr(:props="props" :class="props.rowIndex % 2 === 0 ? 'even-row' : 'odd-row'")
+        q-td(v-for="col in props.cols" :key="col.name" :props="props")
           template(v-if="col.name === 'operate'")
             slot(name="operate" :row="props.row") 
           | {{ col.format ? col.format(props.row[col.field]) : props.row[col.field] }}
     template(v-slot:bottom-row)
-      QTr.summary(v-if="summary")
-        QTd(v-for="col in columns" :key="col.name" :class="`text-${col.align || 'right'}`")
+      q-tr(class="summary" v-if="summary")
+        q-td(v-for="col in columns" :key="col.name" :class="`text-${col.align || 'right'}`")
           template(v-if="summary[col.name] || summary[col.name] === 0")
             template(v-if="col.format") {{ col.format(summary[col.name]) }} 
             template(v-else) {{ summary[col.name] }}
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   rows: Array,

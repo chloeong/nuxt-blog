@@ -1,7 +1,7 @@
 <template lang="pug">
-QBreadcrumbs.q-pa-md
-  QBreadcrumbsEl.text-black(label="Home" to="/")
-  QBreadcrumbsEl.text-black(
+q-breadcrumbs
+  q-breadcrumbs-el(label="Home" to="/")
+  q-breadcrumbs-el(
     v-for="(breadcrumb, index) in breadcrumbs"
     :key="index"
     :to="breadcrumb.to"
@@ -38,3 +38,12 @@ const breadcrumbs = computed(() => {
   })
 })
 </script>
+
+<style scope lang="scss">
+.q-breadcrumbs {
+  padding: 16px;
+  .q-breadcrumbs-el {
+    color: #000000;
+  }
+}
+</style>

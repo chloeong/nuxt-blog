@@ -5,127 +5,131 @@
     .ubi-filter-sub-title {{ subTitle }}
     span.ubi-filter-action-button
       slot(name="actionButton")
-  QForm.ubi-filter-form(@submit.prevent="$emit('submit')")
+  q-form(class="ubi-filter-form" @submit.prevent="$emit('submit')")
     .row
       .col-xs-12.col-sm-6.col-md-6.row(v-for="(field, index) in fields" :key="index")
         //- label
-        span.text-subtitle1.col-xs-12.col-sm-4.q-mb-md
-          QIcon.ubi-filter-label-icon(v-if="field.icon" :name="field.icon")
+        span(class="text-subtitle1 col-xs-12 col-sm-4 q-mb-md")
+          q-icon(class="ubi-filter-label-icon" v-if="field.icon" :name="field.icon")
           | {{ field.label }}
-        .col-xs-12.col-sm-7.col-md-7.q-mr-md
-          //- input
-          QInput(
-            v-if="field.type === 'input'"
-            v-model="searchData[field.name]"
-            :key="field.name"
-            :label="field.label"
-            :placeholder="field.placeholder || ''"
-            :disable="field.disabled || false"
-            :class="{ 'ubi-filter-input-disabled': field.disabled }"
-            :error="errorObj.hasOwnProperty(field.value)"
-            :error-message="errorObj.hasOwnProperty(field.value) ? errorObj[field.value][0] : ''"
-            outlined
-            dense
-          )
+        //- input
+        q-input(
+          class="col-xs-12 col-sm-7 col-md-7 q-mr-md"
+          v-if="field.type === 'input'"
+          v-model="searchData[field.name]"
+          :key="field.name"
+          :label="field.label"
+          :placeholder="field.placeholder || ''"
+          :disable="field.disabled || false"
+          :class="{ disabled: field.disabled }"
+          :error="errorObj.hasOwnProperty(field.value)"
+          :error-message="errorObj.hasOwnProperty(field.value) ? errorObj[field.value][0] : ''"
+          outlined
+          dense
+        )
 
-          //- select
-          QSelect(
-            v-if="field.type === 'select'"
-            v-model="searchData[field.name]"
-            :key="field.name"
-            :label="field.label"
-            :options="field.selectOptions || []"
-            :clearable="field.clearable || false"
-            :disable="field.disabled || false"
-            :class="{ 'ubi-filter-input-disabled': field.disabled }"
-            outlined
-            dense
-          )
+        //- select
+        q-select(
+          class="col-xs-12 col-sm-7 col-md-7 q-mr-md"
+          v-if="field.type === 'select'"
+          v-model="searchData[field.name]"
+          :key="field.name"
+          :label="field.label"
+          :options="field.selectOptions || []"
+          :clearable="field.clearable || false"
+          :disable="field.disabled || false"
+          :class="{ disabled: field.disabled }"
+          outlined
+          dense
+        )
 
-          //- multiple-select
-          QSelect(
-            v-if="field.type === 'multiple-select'"
-            v-model="searchData[field.name]"
-            :key="field.name"
-            :label="field.label"
-            :options="field.selectOptions || []"
-            :clearable="field.clearable || false"
-            :disable="field.disabled || false"
-            :class="{ 'ubi-filter-input-disabled': field.disabled }"
-            multiple
-            outlined
-            dense
-          )
-            template(v-slot:option="scope")
-              QItem(v-bind="scope.itemProps")
-                QItemSection.col-1
-                  QCheckbox(v-model="scope.selected" dense @update:model-value="scope.toggleOption(scope.opt)")
-                QItemSection.col-11
-                  QItemLabel {{ scope.opt.label }}
+        //- multiple-select
+        q-select(
+          class="col-xs-12 col-sm-7 col-md-7 q-mr-md"
+          v-if="field.type === 'multiple-select'"
+          v-model="searchData[field.name]"
+          :key="field.name"
+          :label="field.label"
+          :options="field.selectOptions || []"
+          :clearable="field.clearable || false"
+          :disable="field.disabled || false"
+          :class="{ disabled: field.disabled }"
+          multiple
+          outlined
+          dense
+        )
+          template(v-slot:option="scope")
+            q-item(v-bind="scope.itemProps")
+              q-item-section.col-1
+                q-checkbox(v-model="scope.selected" dense @update:model-value="scope.toggleOption(scope.opt)")
+              q-item-section.col-11
+                q-item-label {{ scope.opt.label }}
 
-          //- date
-          QInput(
-            v-if="field.type === 'date'"
-            v-model="searchData[field.name]"
+        //- date
+        q-input(
+          class="col-xs-12 col-sm-7 col-md-7 q-mr-md"
+          v-if="field.type === 'date'"
+          v-model="searchData[field.name]"
+          :key="field.name"
+          :label="field.label"
+          :disable="field.disabled || false"
+          :class="{ disabled: field.disabled }"
+          outlined
+          dense
+        )
+          template(v-slot:append)
+            q-icon.cursor-pointer(name="event")
+              q-popup-proxy(cover transition-show="scale" transition-hide="scale")
+                q-date(v-model="searchData[field.name]" :options="field.dateOptions")
+                  .row.items-center.justify-end
+                    q-btn(v-close-popup label="Close" color="primary" flat)
+
+        //- date-range
+        template(v-if="field.type === 'date-range'")
+          q-input(
+            class="col-xs-12 col-sm-3 col-md-3"
+            v-model="searchData[field.name].start"
             :key="field.name"
             :label="field.label"
             :disable="field.disabled || false"
-            :class="{ 'ubi-filter-input-disabled': field.disabled }"
+            :class="{ disabled: field.disabled }"
             outlined
             dense
           )
             template(v-slot:append)
-              QIcon.cursor-pointer(name="event")
-                QPopupProxy(cover transition-show="scale" transition-hide="scale")
-                  QDate(v-model="searchData[field.name]" :options="field.dateOptions")
+              q-icon.cursor-pointer(name="event")
+                q-popup-proxy(cover transition-show="scale" transition-hide="scale")
+                  q-date(v-model="searchData[field.name].start" :options="startDateOptions(field)")
                     .row.items-center.justify-end
-                      QBtn(v-close-popup label="Close" color="primary" flat)
-
-          //- date-range
-          template(v-if="field.type === 'date-range'")
-            QInput.col-xs-12.col-sm-3.col-md-3(
-              v-model="searchData[field.name].start"
-              :key="field.name"
-              :label="field.label"
-              :disable="field.disabled || false"
-              :class="{ 'ubi-filter-input-disabled': field.disabled }"
-              outlined
-              dense
-            )
-              template(v-slot:append)
-                QIcon.cursor-pointer(name="event")
-                  QPopupProxy(cover transition-show="scale" transition-hide="scale")
-                    QDate(v-model="searchData[field.name].start" :options="startDateOptions(field)")
-                      .row.items-center.justify-end
-                        QBtn(v-close-popup label="Close" color="primary" flat)
-            span.q-mb-md.q-mx-xs -
-            QInput.col-xs-12.col-sm-3.col-md-3(
-              v-model="searchData[field.name].end"
-              :key="field.name"
-              :label="field.label"
-              :options="field.dateOptions"
-              :disable="field.disabled || false"
-              :class="{ 'ubi-filter-input-disabled': field.disabled }"
-              outlined
-              dense
-            )
-              template(v-slot:append)
-                QIcon.cursor-pointer(name="event")
-                  QPopupProxy(cover transition-show="scale" transition-hide="scale")
-                    QDate(v-model="searchData[field.name].end" :options="endDateOptions(field)")
-                      .row.items-center.justify-end
-                        QBtn(v-close-popup label="Close" color="primary" flat)
+                      q-btn(v-close-popup label="Close" color="primary" flat)
+          .col-xs-12.col-sm-1.col-md-1.text-center -
+          q-input(
+            class="col-xs-12 col-sm-4 col-md-3"
+            v-model="searchData[field.name].end"
+            :key="field.name"
+            :label="field.label"
+            :options="field.dateOptions"
+            :disable="field.disabled || false"
+            :class="{ disabled: field.disabled }"
+            outlined
+            dense
+          )
+            template(v-slot:append)
+              q-icon.cursor-pointer(name="event")
+                q-popup-proxy(cover transition-show="scale" transition-hide="scale")
+                  q-date(v-model="searchData[field.name].end" :options="endDateOptions(field)")
+                    .row.items-center.justify-end
+                      q-btn(v-close-popup label="Close" color="primary" flat)
 
           //- custom
           template(v-if="field.type === 'custom'")
             slot(:name="field.name" :search-data="searchData")
     .ubi-filter-button-group.row
-      QBtn.ubi-filter-button.col-2(v-if="typeof handleSearch === 'function'" :label="searchLabel" color="primary" @click="handleSearch")
-      QBtn.ubi-filter-button.col-2(v-if="typeof handleClear === 'function'" label="Clear" color="secondary" @click="handleClear")
+      q-btn(class="ubi-filter-button col-2" v-if="typeof handleSearch === 'function'" :label="searchLabel" color="primary" @click="handleSearch")
+      q-btn(class="ubi-filter-button col-2" v-if="typeof handleClear === 'function'" label="Clear" color="secondary" @click="handleClear")
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 const { $dayjs } = useNuxtApp();
 
 const props = defineProps({
@@ -206,8 +210,13 @@ const endDateOptions = (field) => {
       font-size: 24px;
       margin-right: 8px;
     }
-    .ubi-filter-input-disabled {
-      background-color: #e8eaf6 !important;
+    .ubi-filter-field {
+      margin-right: 16px;
+      .q-field.disabled {
+        .q-field__inner {
+          background-color: #e8eaf6 !important;
+        }
+      }
     }
     .ubi-filter-button-group {
       justify-content: center;

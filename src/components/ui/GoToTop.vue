@@ -1,5 +1,6 @@
 <template lang="pug">
-  QBtn.go-top-btn(
+  q-btn(
+    class="go-top-btn"
     v-if="showGoTop"
     icon="keyboard_arrow_up"
     color="primary"

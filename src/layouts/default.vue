@@ -1,11 +1,11 @@
 <template lang="pug">
-  QLayout.layout-container(view="lHh Lpr lFf")
+  q-layout(view="lHh Lpr lFf")
     Header(@toggleSidebar="toggleSidebar")
 
-    QDrawer(v-model="isSidebarOpen" show-if-above bordered)
+    q-drawer(v-model="isSidebarOpen" show-if-above bordered)
       Sidebar(@toggleSidebar="toggleSidebar")
 
-    QPageContainer
+    q-page-container
       .main-content
         Breadcrumb
         slot

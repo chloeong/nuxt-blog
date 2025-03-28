@@ -3,7 +3,7 @@ aside.sidebar
   .sidebar-header
     slot(name="header")
       .title Admin Panel
-      QBtn(
+      q-btn(
         flat
         dense
         round
@@ -11,36 +11,36 @@ aside.sidebar
         aria-label="Close"
         @click="emit('toggleSidebar')"
       )
-  QList
+  q-list
     template(v-for="item in routeData" :key="item.name")
-      QExpansionItem(
+      q-expansion-item(
         v-if="item.children"
         :label="item.label"
         :icon="item.icon"
         :content-inset-level="0.5"
         :default-opened="isExpanded(item.to)"
       )
-        QList
-          QItem(
+        q-list
+          q-item(
             v-for="child in item.children"
             :key="child.label"
             :to="child.to"
             clickable
             :active="isRouteActive(child.to)"
           )
-            QItemSection(avatar)
+            q-item-section(avatar)
               q-icon(:name="child.icon")
-            QItemSection {{ child.label }}
+            q-item-section {{ child.label }}
 
-      QItem(
+      q-item(
         v-else
         :to="item.to"
         clickable
         :active="isRouteActive(item.to)"
       )
-        QItemSection(avatar)
+        q-item-section(avatar)
           q-icon(:name="item.icon")
-        QItemSection {{ item.label }}
+        q-item-section {{ item.label }}
 </template>
 
 <script setup>

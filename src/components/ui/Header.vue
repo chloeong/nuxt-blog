@@ -1,7 +1,7 @@
 <template lang="pug">
-QHeader(elevated)
-  QToolbar
-    QBtn(
+q-header(elevated)
+  q-toolbar
+    q-btn(
       flat
       dense
       round
@@ -10,7 +10,7 @@ QHeader(elevated)
       @click="emit('toggleSidebar')"
     )
 
-    QToolbarTitle Quasar App
+    q-toolbar-title Quasar App
 </template>
 
 <script setup>

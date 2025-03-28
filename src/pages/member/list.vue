@@ -9,15 +9,15 @@ Filter(
   :handleClear="handleClear"
 )
   template(#actionButton)
-    QBtn(label="Search" color="primary" @click="handleSearch")
+    q-btn(label="Search" color="primary" @click="handleSearch")
 Table(
   :rows="rows"
   :columns="columns"
   :summary="summary"
 )
   template(#operate="{ row }")
-    QBtn(@click="handleEditRow(row)" color="primary" dense round flat icon="edit")
-    QBtn(@click="handleDeleteRow(row)" color="negative" dense round flat icon="delete" class="q-ml-sm")
+    q-btn(@click="handleEditRow(row)" color="primary" dense round flat icon="edit")
+    q-btn(@click="handleDeleteRow(row)" color="negative" dense round flat icon="delete" class="q-ml-sm")
 </template>
 
 <script setup>
@@ -29,7 +29,7 @@ const { $filters } = useNuxtApp();
 const { isDateAfterToday, isDateBefore30Days } = useDateFilter();
 
 const searchFields = ref([
-  { name: 'username', type: 'input', label: 'Username', icon: 'search', placeholder: 'Enter name' },
+  { name: 'username', type: 'input', label: 'Username', icon: 'search', placeholder: 'Enter name', disabled: true },
   { name: 'status', type: 'multiple-select', label: 'Status', icon: 'search', clearable: true, selectOptions: [{label: 'Enable', value: 1}, {label: 'Disable', value: 0}, {label: 'Freeze', value: 2}] },
   { name: 'birthday', type: 'date', label: 'Birthday', icon: 'event', dateOptions: (date) => isDateAfterToday(date) },
   { name: 'registerDate', type: 'date-range', label: 'Register Date', icon: 'event', dateOptions: (date) => isDateAfterToday(date) },
